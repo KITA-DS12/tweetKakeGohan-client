@@ -1,6 +1,6 @@
 <template>
   <v-list bg-color="#0F1112" style="color: white;">
-    <div style="height: 30px;"/>
+    <div style="height: 30px;" />
     <v-divider></v-divider>
     <v-list-item>
       <template v-slot:prepend>
@@ -52,6 +52,10 @@ const supabase = createClient(
 
 const url = new URL(window.location.href)
 const params = url.searchParams
+
+if (params.get("tag") == null) {
+  location.href = "?tag=adv"
+}
 
 const messages: Ref<Array<any> | null> = ref([])
 const tag: string | null = "#" + params.get("tag")
@@ -113,7 +117,9 @@ const subscribeMessage = () => {
     .channel("any")
     .on("postgres_changes", { event: "INSERT", schema: "public", table: "Messages" }, payload => {
       console.log(payload)
-      messages.value = [payload.new, ...messages.value].slice(0, 100)
+      if (payload.new.tag == tag) {
+        messages.value = [payload.new, ...messages.value].slice(0, 100)
+      }
     })
     .subscribe()
 }
