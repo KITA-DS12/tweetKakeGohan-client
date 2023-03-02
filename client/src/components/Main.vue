@@ -40,6 +40,9 @@
       </div>
     </template>
   </v-list>
+  <v-btn style="position: fixed; bottom: 10%; right: 5%;" icon="mdi-arrow-up-bold-outline" class="pagetop"
+    color="#374FA3" size="72" href="#">
+  </v-btn>
 </template>
 <script lang="ts" setup>
 import { onBeforeUnmount, onMounted, Ref, ref, computed } from 'vue';
@@ -136,3 +139,23 @@ onBeforeUnmount(() => {
   unsubscribeMessage()
 })
 </script>
+<style>
+html {
+  scroll-behavior: smooth;
+}
+
+.pagetop {
+  height: 50px;
+  width: 50px;
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+  background: #fff;
+  border: solid 2px #000;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+</style>
